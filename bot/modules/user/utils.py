@@ -34,7 +34,7 @@ async def find_game(_):
         )
         message_p2 = await app.bot.send_message(
             chat_id=player_2,
-            text="Ваш ход",
+            text="Ход соперника",
             reply_markup=InlineKeyboardMarkup(keyboard)
         )
         app.bot_data[player_1] = app.bot_data[player_2] = [game, message_p1.message_id, message_p2.message_id]
