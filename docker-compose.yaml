@@ -1,0 +1,30 @@
+version: '3'
+
+name: tick_tack_toe_chatbot
+services:
+
+  tick_tack_toe_db:
+    image: postgres
+    restart: always
+    container_name: ${POSTGRES_HOST}
+    env_file:
+      - .env
+    volumes:
+      - /opt/tick_tack_toe_postgres:/var/lib/postgresql
+
+  tick_tack_toe_bot:
+    build:
+      context: .
+      dockerfile: bot/Dockerfile
+    image: tick_tack_toe_bot
+    container_name: tick_tack_toe_bot
+    links:
+      - tick_tack_toe_db
+    env_file:
+      - .env
+    volumes:
+      - ${LOGS_PATH}:${LOGS_PATH}
+    restart: always
+    tty: True
+    working_dir: /bot
+
